@@ -471,22 +471,20 @@ def lin_fit_data(path, beam, working_directory, magnet1, magnet2, log, logfile, 
     plot_fitting(fitx_2, fitx_1, fity_2, fity_1, left_data, right_data, path)
 
     dK = 1.0e-5
-    K2 = np.average(left_data.K)
-    K1 = np.average(right_data.K)
-    Qx = np.average(right_data.TUNEX)
-    Qy = np.average(right_data.TUNEY)
+    K2 = np.average(cleaned_x2[:, 0])
+    K1 = np.average(cleaned_x1[:, 0])
+    
+    
+    Qx = np.average(cleaned_x1[:, 1])
+    Qy = np.average(cleaned_y1[:, 1])
 
-    # if log == True:
-    #     logfile.write('Qx: %s, Qy: %s , K_left: %s , K_right: %s, dK: %s \n' %(Qx, Qy, K2, K1, dK))
 
     errx_1 = np.sqrt(np.diag(covx_1)[0]) * dK
     erry_1 = np.sqrt(np.diag(covy_1)[0]) * dK
     errx_2 = np.sqrt(np.diag(covx_2)[0]) * dK
     erry_2 = np.sqrt(np.diag(covy_2)[0]) * dK
 
-    # if log == True:
-    #     logfile.write('dQx_left: %s , Error dQx_left: %s , dQx_right: %s , Error dQx_right: %s  \n' % (fitx_1[0]*dK, errx_1, fitx_2[0]*dK, errx_2))
-    #     logfile.write('dQy_left: %s , Error dQy_left: %s , dQy_right: %s , Error dQy_right: %s  \n' % (fity_1[0]*dK, erry_1, fity_2[0]*dK, erry_2))
+
 
     return fitx_2[0], fitx_1[0], fity_2[0], fity_1[
         0], errx_1, erry_1, errx_2, erry_2, K1, K2, dK, Qx, Qy  # kmod_data  # Array with all dQ's (slopes of fit scaled with dK) and the dK spread. [xR, xL, yR, yL, dK ]
