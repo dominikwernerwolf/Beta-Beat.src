@@ -518,8 +518,8 @@ def returncircuitname(magnet, beam):
 def _main():
     options = parse_args()
 
-    IP_default_err = {'cminus': 0.0, 'misalign': 0.0, 'ek': 0.0}
-    Circuit_default_err = {'cminus': 0.0, 'misalign': 0.0, 'ek': 0.0}
+    IP_default_err = {'cminus': 1e-3, 'misalign': 0.006, 'ek': 0.001}
+    Circuit_default_err = {'cminus': 1e-3, 'misalign': 0.001, 'ek': 0.0016}
 
     if "cminus" not in options:
         if options.ip is not None:

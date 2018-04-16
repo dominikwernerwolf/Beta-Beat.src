@@ -113,10 +113,10 @@ def analysis(Q1, Q2, L_star, m, k_foc, dk_foc, l_foc, k_def, dk_def, l_def, dq_f
     DQs[3] = dq_foc, dq_def + edq_def, k_foc, k_def, L_star, L_star
     DQs[4] = dq_foc, dq_def - edq_def, k_foc, k_def, L_star, L_star
 
-    DQs[5] = dq_foc, dq_def, k_foc + ek_foc, k_def, L_star, L_star
-    DQs[6] = dq_foc, dq_def, k_foc - ek_foc, k_def, L_star, L_star
-    DQs[7] = dq_foc, dq_def, k_foc, k_def + ek_def, L_star, L_star
-    DQs[8] = dq_foc, dq_def, k_foc, k_def - ek_def, L_star, L_star
+    DQs[5] = dq_foc, dq_def, k_foc + k_foc*ek_foc, k_def, L_star, L_star
+    DQs[6] = dq_foc, dq_def, k_foc - k_foc*ek_foc, k_def, L_star, L_star
+    DQs[7] = dq_foc, dq_def, k_foc, k_def + k_def*ek_def, L_star, L_star
+    DQs[8] = dq_foc, dq_def, k_foc, k_def - k_def*ek_def, L_star, L_star
 
     DQs[9] = dq_foc, dq_def, k_foc, k_def, L_star + m, L_star
     DQs[10] = dq_foc, dq_def, k_foc, k_def, L_star - m, L_star
