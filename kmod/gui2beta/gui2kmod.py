@@ -231,7 +231,7 @@ def automatic_cleaning_data(k,tune_data, tune_data_err, limit=1e-5):
 def run_analysis_simplex(path, beam, magnet1, magnet2, hor_bstar, vert_bstar, waist, working_directory, instruments, ek, misalign,
                          cminus, twiss, log, logfile, auto_clean):
 
-    fitx_2, fitx_1, fity_2, fity_1, errx_1, erry_1, errx_2, erry_2, K1, K2, dK, Qx, Qy = lin_fit_data(path, beam,
+    fitx_2, fitx_1, fity_2, fity_1, errx_1, erry_1, errx_2, erry_2, K1, K2, dK, Qx1, Qy1, Qx2, Qy2 = lin_fit_data(path, beam,
                                                                                                       working_directory,
                                                                                                       magnet1, magnet2, log, logfile, auto_clean)
 
@@ -258,6 +258,12 @@ def run_analysis_simplex(path, beam, magnet1, magnet2, hor_bstar, vert_bstar, wa
 
         erry_foc = erry_2
         erry_def = erry_1
+        
+        Qx_foc = Qx1
+        Qy_foc = Qy1
+        
+        Qx_def = Qx2
+        Qy_def = Qy2
 
         K_foc = K1
         K_def = K2
@@ -286,15 +292,21 @@ def run_analysis_simplex(path, beam, magnet1, magnet2, hor_bstar, vert_bstar, wa
         K_foc = K2
         K_def = K1
 
+        Qx_foc = Qx2
+        Qy_foc = Qy2
+        
+        Qx_def = Qx1
+        Qy_def = Qy1
+
         l_foc = Magnet_definitions.MagnetLength(magnet2, beam, twiss)
         l_def = Magnet_definitions.MagnetLength(magnet1, beam, twiss)
 
     L_star = Magnet_definitions.Lstar(magnet1, magnet2, beam, twiss)
 
-    resultsx = KModUtilities.analysis(Qx, Qy, L_star, misalign, K_foc, dK, l_foc, K_def, dK, l_def, fitx_foc, errx_foc,
+    resultsx = KModUtilities.analysis(Qx_foc, Qx_def, Qy_foc, L_star, misalign, K_foc, dK, l_foc, K_def, dK, l_def, fitx_foc, errx_foc,
                                       fitx_def, errx_def, ek, ek, cminus, hor_bstar, waist,
                                       (magnet1 + '-' + magnet2 + '.' + beam) + '.X', log, logfile)
-    resultsy = KModUtilities.analysis(Qy, Qx, L_star, misalign, K_foc, dK, l_foc, K_def, dK, l_def, fity_foc, erry_foc,
+    resultsy = KModUtilities.analysis(Qy_foc, Qy_def, Qx_foc, L_star, misalign, K_foc, dK, l_foc, K_def, dK, l_def, fity_foc, erry_foc,
                                       fity_def, erry_def, ek, ek, cminus, vert_bstar, waist,
                                       (magnet1 + '-' + magnet2 + '.' + beam) + '.Y', log, logfile)
 
@@ -475,9 +487,11 @@ def lin_fit_data(path, beam, working_directory, magnet1, magnet2, log, logfile, 
     K1 = np.average(cleaned_x1[:, 0])
     
     
-    Qx = np.average(cleaned_x1[:, 1])
-    Qy = np.average(cleaned_y1[:, 1])
-
+    Qx1 = np.average(cleaned_x1[:, 1])
+    Qy1 = np.average(cleaned_y1[:, 1])
+    
+    Qx2 = np.average(cleaned_x2[:, 1])
+    Qy2 = np.average(cleaned_y2[:, 1])
 
     errx_1 = np.sqrt(np.diag(covx_1)[0]) * dK
     erry_1 = np.sqrt(np.diag(covy_1)[0]) * dK
@@ -486,8 +500,7 @@ def lin_fit_data(path, beam, working_directory, magnet1, magnet2, log, logfile, 
 
 
 
-    return fitx_2[0], fitx_1[0], fity_2[0], fity_1[
-        0], errx_1, erry_1, errx_2, erry_2, K1, K2, dK, Qx, Qy  # kmod_data  # Array with all dQ's (slopes of fit scaled with dK) and the dK spread. [xR, xL, yR, yL, dK ]
+    return fitx_2[0], fitx_1[0], fity_2[0], fity_1[0], errx_1, erry_1, errx_2, erry_2, K1, K2, dK, Qx1, Qy1, Qx2, Qy2  # kmod_data  # Array with all dQ's (slopes of fit scaled with dK) and the dK spread. [xR, xL, yR, yL, dK ]
 
 
 def returnmagnetname(circuit, beam, twiss):
