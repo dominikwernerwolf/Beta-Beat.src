@@ -52,12 +52,18 @@ Usage in another Python module::
 """
 
 import argparse
-import os
-import sys
-import shutil
 import math
+import os
 import re
+import shutil
+import sys
+
 import numpy as np
+
+# Root of Beta-Beat.src
+new_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
+if new_path not in sys.path:
+    sys.path.append(new_path)
 
 import Python_Classes4MAD.metaclass as metaclass
 from utils import bpm as bpm_util

@@ -31,16 +31,3 @@ Module utils.logging_tools
 .. automodule:: utils.logging_tools
     :members:
 
-
-Module utils.ndiff
-----------------------
-
-.. automodule:: utils.ndiff
-    :members:
-
-Module utils.tfs_file_writer
---------------------------------
-
-.. automodule:: utils.tfs_file_writer
-    :members:
-

@@ -49,14 +49,21 @@ Options::
 .. moduleauthor:: Unknown
 """
 
-import sys
-import pickle
-import os
-import optparse
-import re
 import json
+import optparse
+import os
+import pickle
+import re
+import sys
 
 import numpy
+
+# Root of Beta-Beat.src
+new_path = os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
+if new_path not in sys.path:
+    sys.path.append(new_path)
+
 
 import utils.iotools
 import tfs_files.tfs_file_writer

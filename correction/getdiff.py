@@ -26,12 +26,18 @@ TODOs and Notes:
 """
 from __future__ import print_function
 
+import os
 import sys
 
 import numpy as np
 import pandas as pd
 from os.path import join, isdir, exists, split
 
+# Root of Beta-Beat.src
+new_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                        os.path.pardir))
+if new_path not in sys.path:
+    sys.path.append(new_path)
 from tfs_files.optics_file import OpticsMeasurement
 from twiss_optics.optics_class import TwissOptics
 from tfs_files.tfs_pandas import read_tfs, write_tfs

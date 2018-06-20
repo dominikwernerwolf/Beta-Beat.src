@@ -11,9 +11,18 @@ for free motion and for driven motion. The twisses should contain the chromatic 
 
 """
 
+import os
+import sys
 from collections import OrderedDict
+
 import numpy as np
 import pandas as pd
+
+# Root of Beta-Beat.src
+new_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+if new_path not in sys.path:
+    sys.path.append(new_path)
+
 from tfs_files.tfs_pandas import write_tfs, read_tfs
 
 

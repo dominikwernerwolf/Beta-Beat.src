@@ -1,6 +1,14 @@
-from tfs_files import tfs_file_writer
-from sbs_beta_writer import intersect, weighted_average_for_SbS_elements
 import os
+import sys
+
+# Root of Beta-Beat.src
+new_path = os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir))
+if new_path not in sys.path:
+    sys.path.append(new_path)
+
+from sbs_beta_writer import intersect, weighted_average_for_SbS_elements
+from tfs_files import tfs_file_writer
 
 
 def write_chromatic(element_name, is_element, measured_chromatic_wx, measured_chromatic_wy, input_model, propagated_models, save_path, chrom_summary_file):

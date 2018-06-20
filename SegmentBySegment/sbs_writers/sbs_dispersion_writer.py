@@ -1,8 +1,17 @@
-import os
-import numpy as np
 import math
-
+import os
+import sys
 from math import sqrt
+
+import numpy as np
+
+# Root of Beta-Beat.src
+new_path = os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir))
+if new_path not in sys.path:
+    sys.path.append(new_path)
+
+
 from tfs_files import tfs_file_writer
 from sbs_beta_writer import intersect, weighted_average_for_SbS_elements
 

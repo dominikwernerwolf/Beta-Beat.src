@@ -1,5 +1,13 @@
 import os
+import sys
 from math import sqrt, tan, sin, cos, pi
+
+# Root of Beta-Beat.src
+new_path = os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir))
+if new_path not in sys.path:
+    sys.path.append(new_path)
+
 from tfs_files import tfs_file_writer
 import sbs_phase_writer
 import sbs_beta_writer

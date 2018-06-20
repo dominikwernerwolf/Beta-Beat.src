@@ -1,6 +1,10 @@
 import os
 import sys
 
+# Root of Beta-Beat.src
+new_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir))
+if new_path not in sys.path:
+    sys.path.append(new_path)
 import sbs_beta_writer
 from math import sqrt
 from tfs_files import tfs_file_writer

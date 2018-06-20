@@ -3,12 +3,18 @@ from __future__ import unicode_literals
 import argparse
 import os
 import re
+import sys
 
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import rcParams
 from matplotlib.backends.backend_pdf import PdfPages
+
+# Root of Beta-Beat.src
+new_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
+if new_path not in sys.path:
+    sys.path.append(new_path)
 
 from utils import logging_tools
 from tfs_files import tfs_pandas as tfs
