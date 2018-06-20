@@ -1,6 +1,6 @@
 import os
 from math import sqrt, tan, sin, cos, pi
-from utils import tfs_file_writer
+from tfs_files import tfs_file_writer
 import sbs_phase_writer
 import sbs_beta_writer
 from sbs_beta_writer import weighted_average_for_SbS_elements

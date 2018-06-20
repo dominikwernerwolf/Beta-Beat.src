@@ -5,7 +5,7 @@ import re
 import logging
 import pandas
 import numpy as np
-from utils import tfs_file_writer
+import tfs_file_writer
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
@@ -71,6 +71,10 @@ class TfsDataFrame(pandas.DataFrame):
     @property
     def _constructor(self):
         return TfsDataFrame
+
+    def get_index_by_regex(self, pattern):
+        """ Returns list of strings from list_of_str that match with regex """
+        return [s for s in self.index.values if re.search(pattern, s)]
 
 
 class _Indx(object):
@@ -194,47 +198,6 @@ def write_tfs(tfs_path, data_frame, headers_dict={}, save_index=False):
     tfs_writer.write_to_file()
 
 
-def add_coupling(data_frame):
-    """
-    Computes the coupling for data_frame adding 3 columns to it:
-    - f1001
-    - f1010
-    - gamma
-    """
-    df = data_frame
-    j = np.array([[0., 1.],
-                  [-1., 0.]])
-    rs = np.reshape(df.as_matrix(columns=["R11", "R12",
-                                          "R21", "R22"]),
-                    (len(df), 2, 2))
-    cs = np.einsum("ij,kjn,no->kio",
-                   -j, np.transpose(rs, axes=(0, 2, 1)), j)
-    cs = np.einsum("k,kij->kij", (1 / np.sqrt(1 + np.linalg.det(rs))), cs)
-
-    g11a = 1 / np.sqrt(df.loc[:, "BETX"])
-    g12a = np.zeros(len(df))
-    g21a = df.loc[:, "ALFX"] / np.sqrt(df.loc[:, "BETX"])
-    g22a = np.sqrt(df.loc[:, "BETX"])
-    gas = np.reshape(np.array([g11a, g12a,
-                               g21a, g22a]).T,
-                     (len(df), 2, 2))
-
-    ig11b = np.sqrt(df.loc[:, "BETY"])
-    ig12b = np.zeros(len(df))
-    ig21b = -df.loc[:, "ALFY"] / np.sqrt(df.loc[:, "BETY"])
-    ig22b = 1. / np.sqrt(df.loc[:, "BETY"])
-    igbs = np.reshape(np.array([ig11b, ig12b,
-                                ig21b, ig22b]).T,
-                      (len(df), 2, 2))
-    cs = np.einsum("kij,kjl,kln->kin", gas, cs, igbs)
-    gammas = np.sqrt(1 - np.linalg.det(cs))
-    data_frame.loc[:, "gamma"] = gammas
-    data_frame.loc[:, "f1001"] = ((cs[:, 0, 0] + cs[:, 1, 1]) * 1j +
-                                  (cs[:, 0, 1] - cs[:, 1, 0])) / 4 / gammas
-    data_frame.loc[:, "f1010"] = ((cs[:, 0, 0] - cs[:, 1, 1]) * 1j +
-                                  (-cs[:, 0, 1]) - cs[:, 1, 0]) / 4 / gammas
-
-
 class TfsFormatError(Exception):
     """
     Raised when wrong format is detected in the TFS file.
@@ -333,11 +296,6 @@ def get_bpms(data_frame):
 def get_magnets(data_frame):
     """ Return a list of Magnet-Names from data_frame """
     return [idx for idx in data_frame.index.values if idx.startswith("M")]
-
-
-def get_index_by_regex(data_frame, pattern):
-    """ Returns list of strings from list_of_str that match with regex """
-    return [s for s in data_frame.index.values if re.search(pattern, s)]
 
 
 if __name__ == "__main__":

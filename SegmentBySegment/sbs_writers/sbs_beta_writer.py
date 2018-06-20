@@ -1,10 +1,8 @@
-import __init__  # @UnusedImport
 import os
-import sys
 import numpy as np
 import math
 
-from utils import tfs_file_writer
+from tfs_files import tfs_file_writer
 
 
 def write_beta(element_name, is_element, measured_hor_beta, measured_ver_beta, input_model, propagated_models, save_path, beta_summary_file):

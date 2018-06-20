@@ -4,7 +4,8 @@ import re
 import json
 from collections import OrderedDict
 import numpy as np
-from utils import logging_tools, tfs_pandas
+from utils import logging_tools
+from tfs_files import tfs_pandas
 from accelerator import Accelerator, AcceleratorDefinitionError, Element, AccExcitationMode, get_commonbpm
 from utils.entrypoint import EntryPoint, EntryPointParameters, split_arguments
 

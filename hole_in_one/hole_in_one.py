@@ -12,7 +12,7 @@ import clean
 import harpy
 from io_handlers import input_handler, output_handler
 
-from utils import tfs_pandas as tfs
+from tfs_files import tfs_pandas as tfs
 from utils.contexts import timeit
 from model import manager
 from sdds_files import turn_by_turn_reader

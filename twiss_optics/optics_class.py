@@ -33,14 +33,12 @@ Only works properly for on-orbit twiss files.
 
 """
 
-import os
 import numpy as np
 import pandas as pd
 from math import factorial
-import matplotlib.pyplot as plt
 from utils.plotting import plot_style as pstyle
 from utils import logging_tools as logtool
-from utils import tfs_pandas as tfs
+from tfs_files import tfs_pandas as tfs
 from utils.contexts import timeit
 from utils.dict_tools import DotDict
 from twiss_optics.twiss_functions import get_phase_advances, tau, dphi

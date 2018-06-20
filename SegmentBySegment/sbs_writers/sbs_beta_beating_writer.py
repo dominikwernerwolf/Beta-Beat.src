@@ -1,10 +1,9 @@
-import __init__  # @UnusedImport
 import os
 import sys
 
 import sbs_beta_writer
 from math import sqrt
-from utils import tfs_file_writer
+from tfs_files import tfs_file_writer
 
 
 def write_beta_beat(element_name,

@@ -45,6 +45,7 @@ class ArgumentError(Exception):
 
 
 class MainInput(object):
+
     DEFAULTS = {
         "write_raw": False,
         "startturn": 0,

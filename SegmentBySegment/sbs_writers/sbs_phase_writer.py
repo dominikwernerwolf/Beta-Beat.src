@@ -1,10 +1,9 @@
-import __init__  # @UnusedImport
 import os
 import sbs_beta_writer
 import numpy as np
 import math
 
-from utils import tfs_file_writer
+from tfs_files import tfs_file_writer
 from sbs_beta_writer import intersect
 
 FIRST_BPM_B1 = "BPMSW.1L2.B1"

@@ -1,7 +1,5 @@
 import numpy as np
-import pandas as pd
-import __init__
-from utils.tfs_pandas import read_tfs
+from tfs_files.tfs_pandas import read_tfs
 
 
 C = 299792458.0 

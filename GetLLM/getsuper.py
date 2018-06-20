@@ -59,14 +59,12 @@ import math
 import re
 import numpy as np
 
-import __init__  # @UnusedImport init will include paths
 import Python_Classes4MAD.metaclass as metaclass
 from utils import bpm as bpm_util
 from utils import logging_tools as logtools
 from utils.dict_tools import DotDict
-from utils import tfs_remove_nan
+from tfs_files import tfs_remove_nan
 from model import manager, creator
-from model.accelerators.accelerator import AccExcitationMode
 
 LOG = logtools.get_logger(__name__)
 

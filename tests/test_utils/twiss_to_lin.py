@@ -14,8 +14,7 @@ for free motion and for driven motion. The twisses should contain the chromatic 
 from collections import OrderedDict
 import numpy as np
 import pandas as pd
-import __init__
-from utils.tfs_pandas import write_tfs, read_tfs
+from tfs_files.tfs_pandas import write_tfs, read_tfs
 
 
 def get_llm_test_files(infile, outpath):

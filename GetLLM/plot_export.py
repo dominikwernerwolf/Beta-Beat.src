@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-import __init__
 
 import argparse
 import os
@@ -12,7 +11,7 @@ from matplotlib import rcParams
 from matplotlib.backends.backend_pdf import PdfPages
 
 from utils import logging_tools
-from utils import tfs_pandas as tfs
+from tfs_files import tfs_pandas as tfs
 from utils.plotting import plot_style as ps
 from utils.plotting.plot_style import MarkerList
 

@@ -36,18 +36,18 @@ Usage2::
 import os
 from utils import iotools
 from utils import logging_tools
-import numpy
+import numpy as np
 
 LOG = logging_tools.get_logger(__name__)
 
 
 def significant_numbers(value, uncertainty):
 
-    digits = -int(numpy.floor(numpy.log10(uncertainty)))
+    digits = -int(np.floor(np.log10(uncertainty)))
     sig_uncertainty = round(uncertainty, digits)
     sig_value = round(value, digits)
 
-    if numpy.floor(uncertainty / 10 ** numpy.floor(numpy.log10(sig_uncertainty))) == 1:
+    if np.floor(uncertainty / 10 ** np.floor(np.log10(sig_uncertainty))) == 1:
         digits = digits + 1
         sig_uncertainty = round(uncertainty, digits)
         sig_value = round(value, digits)
@@ -56,7 +56,7 @@ def significant_numbers(value, uncertainty):
         return format(sig_value, '.0f'), format(sig_uncertainty, '.0f')
 
     if digits > 0:
-        return format(sig_value, '.' + str(numpy.abs(digits)) + 'f'), format(sig_uncertainty, '.' + str(numpy.abs(digits)) + 'f')
+        return format(sig_value, '.' + str(np.abs(digits)) + 'f'), format(sig_uncertainty, '.' + str(np.abs(digits)) + 'f')
     return format(sig_value, '.0f'), format(sig_uncertainty, '.0f')
 
 

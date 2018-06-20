@@ -9,8 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(
     os.path.dirname(__file__),
     ".."
 )))
-from utils import tfs_pandas
-
+from tfs_files import tfs_pandas
 
 BEAMS = BEAM1, BEAM2 = (0, 1)
 SIDES = LEFT, RIGHT = (0, 1)
