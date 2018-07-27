@@ -16,6 +16,7 @@ from utils import tfs_pandas as tfs
 from utils.contexts import timeit
 from model import manager
 from sdds_files import turn_by_turn_reader
+import time, calendar
 
 
 LOGGER = logging.getLogger(__name__)
@@ -69,7 +70,7 @@ def run_all_for_file(tbt_file, main_input, clean_input, harpy_input):
 
     if harpy_input is not None:
         all_bad_bpms = _do_harpy(main_input, harpy_input, bpm_datas, usvs,
-                                 model_tfs, bpm_ress, dpp, all_bad_bpms)
+                                 model_tfs, bpm_ress, dpp, all_bad_bpms, file_date)
 
     for plane in ("x", "y"):
         output_handler.write_bad_bpms(
@@ -118,7 +119,7 @@ def _do_clean(main_input, clean_input, bpm_datas, file_date, model_tfs):
     return usvs, all_bad_bpms, bpm_ress, dpp
 
 
-def _do_harpy(main_input, harpy_input, bpm_datas, usvs, model_tfs, bpm_ress, dpp, all_bad_bpms):
+def _do_harpy(main_input, harpy_input, bpm_datas, usvs, model_tfs, bpm_ress, dpp, all_bad_bpms, file_date):
     lin_frames = {}
     for plane in ("x", "y"):
         bpm_data, usv = bpm_datas[plane], usvs[plane]
@@ -151,7 +152,7 @@ def _do_harpy(main_input, harpy_input, bpm_datas, usvs, model_tfs, bpm_ress, dpp
         lin_frame = _rescale_amps_to_main_line(lin_frame, plane)
         lin_frame = _add_resonances_noise(lin_frame, plane, bpm_ress[plane])
         lin_frame = lin_frame.sort_values('S', axis=0, ascending=True)
-        headers = _compute_headers(lin_frame, plane, dpp)
+        headers = _compute_headers(file_date, lin_frame, plane, dpp)
         output_handler.write_harpy_output(
             main_input,
             lin_frame,
@@ -356,10 +357,12 @@ def _get_allowed_length(rang=[300, 10000], p2max=14, p3max=9, p5max=6):
     return np.sort(nums)
 
 
-def _compute_headers(panda, plane, computed_dpp):
+def _compute_headers(file_date, panda, plane, computed_dpp):
+    unix_time_utc = calendar.timegm(file_date.timetuple())
     plane_number = {"x": "1", "y": "2"}[plane]
     headers = OrderedDict()
     tunes = panda.loc[:, "TUNE" + plane.upper()]
+    headers["Time"] = float(unix_time_utc)
     headers["Q" + plane_number] = np.mean(tunes)
     headers["Q" + plane_number + "RMS"] = np.std(tunes)
     headers["DPP"] = computed_dpp
